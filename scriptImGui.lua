@@ -86,7 +86,7 @@ function ImGui:CreateWindow(opt)
 	tabsBar.Parent = main
 
 	local tabsLayout = Instance.new("UIListLayout")
-	tabsLayout.FillDirection = Horizontal
+	tabsLayout.FillDirection = Enum.FillDirection.Horizontal
 	tabsLayout.Padding = UDim.new(0,6)
 	tabsLayout.Parent = tabsBar
 
