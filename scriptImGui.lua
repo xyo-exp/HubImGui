@@ -1,12 +1,52 @@
-local Players = game:GetService("Players") local TweenService = game:GetService("TweenService") local UIS = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
 
 local Player = Players.LocalPlayer
 
-local ImGui = {} ImGui.__index = ImGui
+local ImGui = {}
+ImGui.__index = ImGui
 
-local function stroke(inst) local s = Instance.new("UIStroke") s.Color = Theme.Border s.Thickness = 1 s.Parent = inst end
+local Theme = {
+	Background = Color3.fromRGB(22,22,22),
+	Panel = Color3.fromRGB(30,30,30),
+	Border = Color3.fromRGB(60,60,60),
+	Text = Color3.fromRGB(230,230,230),
+	SubText = Color3.fromRGB(170,170,170),
+	Accent = Color3.fromRGB(90,140,255),
+	Control = Color3.fromRGB(40,40,40)
+}
 
-local function text(parent, size, align) local t = Instance.new("TextLabel") t.BackgroundTransparency = 1 t.Size = size or UDim2.new(1,0,0,22) t.TextXAlignment = align or Enum.TextXAlignment.Left t.TextYAlignment = Enum.TextYAlignment.Center t.Font = Enum.Font.SourceSans t.TextSize = 14 t.TextColor3 = Theme.Text t.Parent = parent return t end
+local function corner(inst, r)
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(0, r)
+	c.Parent = inst
+end
+
+local function stroke(inst)
+	local s = Instance.new("UIStroke")
+	s.Color = Theme.Border
+	s.Thickness = 1
+	s.Parent = inst
+end
+
+local function text(parent, size, align)
+	local t = Instance.new("TextLabel")
+	t.BackgroundTransparency = 1
+	t.Size = size or UDim2.new(1,0,0,22)
+	t.TextXAlignment = align or Enum.TextXAlignment.Left
+	t.TextYAlignment = Enum.TextYAlignment.Center
+	t.Font = Enum.Font.SourceSans
+	t.TextSize = 14
+	t.TextColor3 = Theme.Text
+	t.Parent = parent
+	return t
+end
+
+function ImGui:CreateWindow(opt)
+	opt = opt or {}
+	local Window = {}
+	Window._controls = {}
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "ImGuiMobile"
