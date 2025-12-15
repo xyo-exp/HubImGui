@@ -1,3 +1,16 @@
+--[[ 
+	ImGui-like Mobile UI Framework (FULL)
+	Widgets:
+	✔ Button
+	✔ Checkbox
+	✔ Slider
+	✔ Dropdown (single & multi)
+	✔ Collapse
+	✔ TextBox
+	✔ Separator / Text
+	✔ Tabs
+]]
+
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local Player = Players.LocalPlayer
@@ -5,6 +18,7 @@ local Player = Players.LocalPlayer
 local ImGui = {}
 ImGui.__index = ImGui
 
+-- ===== THEME =====
 local Theme = {
 	Bg = Color3.fromRGB(18,18,18),
 	BgTransparency = 0.05,
@@ -19,6 +33,7 @@ local Theme = {
 	CollapseBody = Color3.fromRGB(32,32,32)
 }
 
+-- ===== HELPERS =====
 local function corner(inst, r)
 	local c = Instance.new("UICorner")
 	c.CornerRadius = UDim.new(0, r)
@@ -48,6 +63,7 @@ local function isClick(i)
 	return i.UserInputType == Enum.UserInputType.MouseButton1
 end
 
+-- ===== WINDOW =====
 function ImGui:CreateWindow(opt)
 	opt = opt or {}
 	local Window = { Tabs = {} }
@@ -69,6 +85,7 @@ function ImGui:CreateWindow(opt)
 	corner(main,6)
 	stroke(main)
 
+	-- TitleBar
 	local titleBar = Instance.new("Frame")
 	titleBar.Size = UDim2.new(1,0,0,28)
 	titleBar.BackgroundColor3 = Theme.TitleBar
@@ -79,6 +96,7 @@ function ImGui:CreateWindow(opt)
 	title.Position = UDim2.new(0,10,0,0)
 	title.Text = opt.Title or "ImGui"
 
+	-- Tabs bar
 	local tabsBar = Instance.new("Frame")
 	tabsBar.Position = UDim2.new(0,6,0,34)
 	tabsBar.Size = UDim2.new(1,-12,0,28)
@@ -90,12 +108,14 @@ function ImGui:CreateWindow(opt)
 	tabsLayout.Padding = UDim.new(0,6)
 	tabsLayout.Parent = tabsBar
 
+	-- Content
 	local contentHolder = Instance.new("Frame")
 	contentHolder.Position = UDim2.new(0,6,0,68)
 	contentHolder.Size = UDim2.new(1,-12,1,-74)
 	contentHolder.BackgroundTransparency = 1
 	contentHolder.Parent = main
 
+	-- ===== TAB =====
 	function Window:CreateTab(name)
 		local Tab = {}
 
@@ -133,6 +153,7 @@ function ImGui:CreateWindow(opt)
 			scroll.Visible = true
 		end)
 
+		-- ===== WIDGETS =====
 
 		function Tab:Text(txt)
 			local l = label(scroll, UDim2.new(0,260,0,22), true)
@@ -247,6 +268,7 @@ function ImGui:CreateWindow(opt)
 			end)
 		end
 
+		-- ===== TEXTBOX =====
 		function Tab:TextBox(placeholder, cb)
 			local box = Instance.new("TextBox")
 			box.Size = UDim2.new(0,260,0,26)
@@ -268,6 +290,7 @@ function ImGui:CreateWindow(opt)
 			end)
 		end
 
+		-- ===== DROPDOWN =====
 		function Tab:Dropdown(txt, list, cb)
 			local open = false
 
@@ -316,6 +339,7 @@ function ImGui:CreateWindow(opt)
 			end)
 		end
 
+		-- ===== COLLAPSE =====
 		function Tab:Collapse(txt, build)
 			local open = false
 
