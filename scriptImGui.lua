@@ -30,7 +30,7 @@ local function label(parent, text, order, size)
 	t.Size = UDim2.new(1, -10, 0, size or 22)
 	t.TextWrapped = true
 	t.TextXAlignment = Enum.TextXAlignment.Left
-	t.TextYAlignment = Enum.TextXAlignment.Center
+	t.TextYAlignment = Enum.TextYAlignment.Center
 	t.Font = Enum.Font.FredokaOne
 	t.TextSize = 15
 	t.TextColor3 = Theme.Text
