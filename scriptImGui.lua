@@ -1,8 +1,3 @@
---[[ 
-	ImGui-like Mobile UI Framework (FIXED & CLEAN)
-	Mobile Only (MouseButton1)
-]]
-
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local Player = Players.LocalPlayer
@@ -10,7 +5,6 @@ local Player = Players.LocalPlayer
 local ImGui = {}
 ImGui.__index = ImGui
 
--- ===== THEME =====
 local Theme = {
 	Bg = Color3.fromRGB(18,18,18),
 	BgTransparency = 0.05,
@@ -24,7 +18,6 @@ local Theme = {
 	FloatBg = Color3.fromRGB(32,32,32)
 }
 
--- ===== HELPERS =====
 local function corner(inst, r)
 	local c = Instance.new("UICorner")
 	c.CornerRadius = UDim.new(0, r)
@@ -36,7 +29,7 @@ local function label(parent, text, order, size)
 	t.BackgroundTransparency = 1
 	t.Size = UDim2.new(1, -10, 0, size or 22)
 	t.TextWrapped = true
-	t.TextXAlignment = Left
+	t.TextXAlignment = Enum.TextXAlignment.Left
 	t.TextYAlignment = Center
 	t.Font = Enum.Font.FredokaOne
 	t.TextSize = 15
@@ -47,7 +40,6 @@ local function label(parent, text, order, size)
 	return t
 end
 
--- ===== WINDOW =====
 function ImGui:CreateWindow(opt)
 	opt = opt or {}
 	local Window = { Tabs = {} }
@@ -66,7 +58,6 @@ function ImGui:CreateWindow(opt)
 	main.Parent = gui
 	corner(main, 8)
 
-	-- ===== TITLE BAR =====
 	local titleBar = Instance.new("Frame")
 	titleBar.Size = UDim2.new(1, 0, 0, 26)
 	titleBar.BackgroundColor3 = Theme.TitleBar
@@ -87,7 +78,7 @@ function ImGui:CreateWindow(opt)
 	title.BackgroundTransparency = 1
 	title.Position = UDim2.new(0, 38, 0, 0)
 	title.Size = UDim2.new(1, -48, 1, 0)
-	title.TextXAlignment = Left
+	title.TextXAlignment = Enum.TextXAlignment.Left
 	title.Font = Enum.Font.FredokaOne
 	title.TextSize = 15
 	title.TextColor3 = Color3.new(1,1,1)
@@ -103,7 +94,6 @@ function ImGui:CreateWindow(opt)
 		end
 	end)
 
-	-- ===== TABS BAR (SCROLLABLE) =====
 	local tabsScroll = Instance.new("ScrollingFrame")
 	tabsScroll.Position = UDim2.new(0, 6, 0, 30)
 	tabsScroll.Size = UDim2.new(1, -12, 0, 26)
@@ -113,7 +103,7 @@ function ImGui:CreateWindow(opt)
 	tabsScroll.Parent = main
 
 	local tabLayout = Instance.new("UIListLayout")
-	tabLayout.FillDirection = Horizontal
+	tabLayout.FillDirection = Enum.FillDirection.Horizontal
 	tabLayout.Padding = UDim.new(0, 6)
 	tabLayout.Parent = tabsScroll
 
@@ -127,14 +117,12 @@ function ImGui:CreateWindow(opt)
 	divider.BackgroundColor3 = Theme.Border
 	divider.Parent = main
 
-	-- ===== CONTENT =====
 	local contentHolder = Instance.new("Frame")
 	contentHolder.Position = UDim2.new(0, 6, 0, 64)
 	contentHolder.Size = UDim2.new(1, -12, 1, -70)
 	contentHolder.BackgroundTransparency = 1
 	contentHolder.Parent = main
 
-	-- ===== TAB CREATION =====
 	function Window:CreateTab(name)
 		local Tab = {}
 		local orderCounter = 0
@@ -173,7 +161,6 @@ function ImGui:CreateWindow(opt)
 			scroll.Visible = true
 		end)
 
-		-- ===== WIDGETS =====
 		function Tab:Text(txt)
 			orderCounter += 1
 			label(scroll, txt, orderCounter, 24)
